@@ -21,8 +21,8 @@
 
 window.addEventListener('DOMContentLoaded', () => {
   const start = document.querySelector('#start');
-  start.addEventListener('click', function (e) {
-    document.querySelector('#quizBlock').style.display = 'block';
+  start.addEventListener('click', function () { 
+        document.querySelector('#quizBlock').style.display='block';
     start.style.display = 'none';
   });
   // quizArray QUESTIONS & ANSWERS
@@ -44,7 +44,18 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
-  ];
+    {
+    q: 'What is the tallest mountain in the world?',
+    o: ['K2', 'Mount Everest', 'Kangchenjunga', 'Lhotse'],
+    a: 1,
+  },
+  {
+    q: 'Which planet is known as the Red Planet?',
+    o: ['Venus', 'Jupiter', 'Mars', 'Mercury'],
+    a: 2,
+  },
+];
+
 
   // function to Display the quiz questions and answers from the object
   const displayQuiz = () => {
@@ -62,7 +73,8 @@ window.addEventListener('DOMContentLoaded', () => {
       quizWrap.innerHTML = quizDisplay;
     });
   };
-
+  
+  
   // Calculate the score
   const calculateScore = () => {
     let score = 0;
@@ -71,20 +83,28 @@ window.addEventListener('DOMContentLoaded', () => {
         //highlight the li if it is the correct answer
         let li = `li_${index}_${i}`;
         let r = `radio_${index}_${i}`;
-        liElement = document.querySelector('#' + li);
-        radioElement = document.querySelector('#' + r);
+        const liElement = document.querySelector('#' + li);
+        const radioElement = document.querySelector('#' + r);
 
-        if (quizItem.a == i) {
-          //change background color of li element here
+        if (quizItem.a===i) {
+         liElement.style.backgroundColor= '#d4edda';//change background color of li element here
         }
 
-        if (radioElement.checked) {
-          // code for task 1 goes here
+        if (radioElement.checked && quizItem.a===i) {
+         score++; // code for task 1 goes here
         }
+        
       }
     });
+   // document.querySelector('#score').innerText=`My score: ${score}/${quizArray.length}`;
   };
+  
+  document.querySelector('#submit').addEventListener('click', calculateScore);
+  document.querySelector('#reset').addEventListener('Click',() => { 
+    window.location.reload(); 
+  });
 
   // call the displayQuiz function
+  
   displayQuiz();
 });
